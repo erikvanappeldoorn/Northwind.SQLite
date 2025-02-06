@@ -39,8 +39,8 @@ public partial class NorthwindContext : DbContext
 
     public virtual DbSet<Territory> Territories { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite($"Data Source={dbPath}");
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //     => optionsBuilder.UseSqlite($"Data Source={dbPath}");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
