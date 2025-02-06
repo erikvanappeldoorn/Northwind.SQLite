@@ -18,7 +18,7 @@ class Program
 
     private static IServiceCollection ConfigureServices()
     {
-        string relativeDatabasePath = "../../../../Northwind.Entities/northwind.db";
+        string relativeDatabasePath = "../../../../northwind.db";
         string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         string databasePath = Path.GetFullPath(baseDirectory + relativeDatabasePath);
         
