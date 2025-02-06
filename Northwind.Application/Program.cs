@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Northwind.Application.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Northwind.Entities;
 
 namespace Northwind.Application;
 
@@ -15,10 +16,11 @@ class Program
 
     private static IServiceCollection ConfigureServices()
     {
-        IServiceCollection services = new ServiceCollection();
-        services.AddTransient<INorthwindRepository, NorthwindRepository>();
-        services.AddTransient<Application>();
+        const string databasePath =  @"/Users/erikvanappeldoorn/Projects/Northwind.SqlLite/Northwind.Entities/northwind.db";
         
+        IServiceCollection services = new ServiceCollection();
+        services.AddTransient<Application>();
+        services.AddDbContext<NorthwindContext>(optionsBuilder => optionsBuilder.UseSqlite($"Data Source={databasePath}"));
         return services;
     }
 }
