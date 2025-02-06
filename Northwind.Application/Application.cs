@@ -1,17 +1,11 @@
 using System.Diagnostics;
-using System.Net.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Northwind.Entities;
 
 namespace Northwind.Application;
 
-public class Application
+public class Application(NorthwindContext context)
 {
-    private readonly NorthwindContext context;
-    public Application(NorthwindContext context)
-    {
-        this.context = context;
-    }
     public void Run()
     {
         var query = context.OrderDetails
