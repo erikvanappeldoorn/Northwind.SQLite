@@ -27,7 +27,10 @@ class Program
         
         IServiceCollection services = new ServiceCollection();
         services.AddTransient<Application>();
-        services.AddDbContext<NorthwindContext>(optionsBuilder => optionsBuilder.UseSqlite($"Data Source={databasePath}"));
+        services.AddDbContext<NorthwindContext>(optionsBuilder =>
+        {
+            optionsBuilder.UseSqlite($"Data Source={databasePath}");
+        });
         return services;
     }
 }
