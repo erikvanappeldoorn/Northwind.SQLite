@@ -14,102 +14,39 @@ public partial class NorthwindContext : DbContext
         : base(options)
     {
     }
-
-    public virtual DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; }
-
+    
     public virtual DbSet<Category> Categories { get; set; }
-
-    public virtual DbSet<CategorySalesFor1997> CategorySalesFor1997s { get; set; }
-
-    public virtual DbSet<CurrentProductList> CurrentProductLists { get; set; }
-
+    
     public virtual DbSet<Customer> Customers { get; set; }
-
-    public virtual DbSet<CustomerAndSuppliersByCity> CustomerAndSuppliersByCities { get; set; }
-
+    
     public virtual DbSet<CustomerDemographic> CustomerDemographics { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
-
-    public virtual DbSet<Invoice> Invoices { get; set; }
-
+    
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-
-    public virtual DbSet<OrderDetailsExtended> OrderDetailsExtendeds { get; set; }
-
-    public virtual DbSet<OrderSubtotal> OrderSubtotals { get; set; }
-
-    public virtual DbSet<OrdersQry> OrdersQries { get; set; }
-
+    
     public virtual DbSet<Product> Products { get; set; }
-
-    public virtual DbSet<ProductDetailsV> ProductDetailsVs { get; set; }
-
-    public virtual DbSet<ProductSalesFor1997> ProductSalesFor1997s { get; set; }
-
-    public virtual DbSet<ProductsAboveAveragePrice> ProductsAboveAveragePrices { get; set; }
-
-    public virtual DbSet<ProductsByCategory> ProductsByCategories { get; set; }
-
-    public virtual DbSet<QuarterlyOrder> QuarterlyOrders { get; set; }
-
+    
     public virtual DbSet<Region> Regions { get; set; }
-
-    public virtual DbSet<SalesByCategory> SalesByCategories { get; set; }
-
-    public virtual DbSet<SalesTotalsByAmount> SalesTotalsByAmounts { get; set; }
-
+    
     public virtual DbSet<Shipper> Shippers { get; set; }
-
-    public virtual DbSet<SummaryOfSalesByQuarter> SummaryOfSalesByQuarters { get; set; }
-
-    public virtual DbSet<SummaryOfSalesByYear> SummaryOfSalesByYears { get; set; }
-
+    
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
     public virtual DbSet<Territory> Territories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlite("Data Source=database\\northwind.db");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AlphabeticalListOfProduct>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Alphabetical list of products");
-
-            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
-            entity.Property(e => e.UnitPrice).HasColumnType("NUMERIC");
-        });
-
         modelBuilder.Entity<Category>(entity =>
         {
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
         });
-
-        modelBuilder.Entity<CategorySalesFor1997>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Category Sales for 1997");
-        });
-
-        modelBuilder.Entity<CurrentProductList>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Current Product List");
-
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
-        });
-
+        
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
@@ -131,14 +68,7 @@ public partial class NorthwindContext : DbContext
                         j.IndexerProperty<string>("CustomerTypeId").HasColumnName("CustomerTypeID");
                     });
         });
-
-        modelBuilder.Entity<CustomerAndSuppliersByCity>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Customer and Suppliers by City");
-        });
-
+        
         modelBuilder.Entity<CustomerDemographic>(entity =>
         {
             entity.HasKey(e => e.CustomerTypeId);
@@ -171,23 +101,7 @@ public partial class NorthwindContext : DbContext
                         j.IndexerProperty<string>("TerritoryId").HasColumnName("TerritoryID");
                     });
         });
-
-        modelBuilder.Entity<Invoice>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Invoices");
-
-            entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
-            entity.Property(e => e.Freight).HasColumnType("NUMERIC");
-            entity.Property(e => e.OrderDate).HasColumnType("DATETIME");
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.RequiredDate).HasColumnType("DATETIME");
-            entity.Property(e => e.ShippedDate).HasColumnType("DATETIME");
-            entity.Property(e => e.UnitPrice).HasColumnType("NUMERIC");
-        });
-
+        
         modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
@@ -226,42 +140,7 @@ public partial class NorthwindContext : DbContext
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
-
-        modelBuilder.Entity<OrderDetailsExtended>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Order Details Extended");
-
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.UnitPrice).HasColumnType("NUMERIC");
-        });
-
-        modelBuilder.Entity<OrderSubtotal>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Order Subtotals");
-
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-        });
-
-        modelBuilder.Entity<OrdersQry>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Orders Qry");
-
-            entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
-            entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
-            entity.Property(e => e.Freight).HasColumnType("NUMERIC");
-            entity.Property(e => e.OrderDate).HasColumnType("DATETIME");
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.RequiredDate).HasColumnType("DATETIME");
-            entity.Property(e => e.ShippedDate).HasColumnType("DATETIME");
-        });
-
+        
         modelBuilder.Entity<Product>(entity =>
         {
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
@@ -279,102 +158,19 @@ public partial class NorthwindContext : DbContext
 
             entity.HasOne(d => d.Supplier).WithMany(p => p.Products).HasForeignKey(d => d.SupplierId);
         });
-
-        modelBuilder.Entity<ProductDetailsV>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("ProductDetails_V");
-
-            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
-            entity.Property(e => e.UnitPrice).HasColumnType("NUMERIC");
-        });
-
-        modelBuilder.Entity<ProductSalesFor1997>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Product Sales for 1997");
-        });
-
-        modelBuilder.Entity<ProductsAboveAveragePrice>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Products Above Average Price");
-
-            entity.Property(e => e.UnitPrice).HasColumnType("NUMERIC");
-        });
-
-        modelBuilder.Entity<ProductsByCategory>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Products by Category");
-        });
-
-        modelBuilder.Entity<QuarterlyOrder>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Quarterly Orders");
-
-            entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
-        });
-
+        
         modelBuilder.Entity<Region>(entity =>
         {
             entity.Property(e => e.RegionId)
                 .ValueGeneratedNever()
                 .HasColumnName("RegionID");
         });
-
-        modelBuilder.Entity<SalesByCategory>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Sales by Category");
-
-            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-        });
-
-        modelBuilder.Entity<SalesTotalsByAmount>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Sales Totals by Amount");
-
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.ShippedDate).HasColumnType("DATETIME");
-        });
-
+        
         modelBuilder.Entity<Shipper>(entity =>
         {
             entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
         });
-
-        modelBuilder.Entity<SummaryOfSalesByQuarter>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Summary of Sales by Quarter");
-
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.ShippedDate).HasColumnType("DATETIME");
-        });
-
-        modelBuilder.Entity<SummaryOfSalesByYear>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("Summary of Sales by Year");
-
-            entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.ShippedDate).HasColumnType("DATETIME");
-        });
-
+        
         modelBuilder.Entity<Supplier>(entity =>
         {
             entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
