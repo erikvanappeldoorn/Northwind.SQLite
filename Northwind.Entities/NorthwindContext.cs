@@ -6,8 +6,6 @@ namespace Northwind.Entities;
 
 public partial class NorthwindContext : DbContext
 {
-
-    private readonly string dbPath = @"/Users/erikvanappeldoorn/Projects/Northwind.SqlLite/Northwind.Entities/northwind.db";
     public NorthwindContext()
     {
     }
@@ -38,9 +36,6 @@ public partial class NorthwindContext : DbContext
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
     public virtual DbSet<Territory> Territories { get; set; }
-
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //     => optionsBuilder.UseSqlite($"Data Source={dbPath}");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
