@@ -4,10 +4,11 @@ using Northwind.Entities;
 
 namespace Northwind.Application;
 
-public class Application(NorthwindContext context)
+public class Application(IDbContextFactory<NorthwindContext> northwindContextFactory)
 {
     public void Run()
     {
+        using var context = northwindContextFactory.CreateDbContext();
         var query = context.OrderDetails
             .Include(o => o.Order)
             .GroupBy(o => o.OrderId)
@@ -20,28 +21,28 @@ public class Application(NorthwindContext context)
                 })
             .OrderByDescending(o => o.Total)
             .Take(1);
-        
+
         Console.WriteLine(query.ToQueryString());
-        
+
         RunQueryWithTiming(() =>
         {
             var result = query.First();
-            
+
             Console.WriteLine();
             Console.WriteLine("----- Results -----");
             Console.WriteLine();
-            
+
             Console.WriteLine($"Highest Order id {result.OrderId}. {result.Total:c}");
         });
     }
 
     private void RunQueryWithTiming(Action action)
     {
-        Stopwatch stopwatch = new Stopwatch();
+        var stopwatch = new Stopwatch();
         stopwatch.Start();
-        
+
         action();
-        
+
         stopwatch.Stop();
         Console.WriteLine($"Elapsed time: {stopwatch.ElapsedMilliseconds} ms.", ConsoleColor.Cyan);
     }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Northwind.Entities;
 
@@ -14,36 +12,33 @@ public partial class NorthwindContext : DbContext
         : base(options)
     {
     }
-    
+
     public virtual DbSet<Category> Categories { get; set; }
-    
+
     public virtual DbSet<Customer> Customers { get; set; }
-    
+
     public virtual DbSet<CustomerDemographic> CustomerDemographics { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
-    
+
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-    
+
     public virtual DbSet<Product> Products { get; set; }
-    
+
     public virtual DbSet<Region> Regions { get; set; }
-    
+
     public virtual DbSet<Shipper> Shippers { get; set; }
-    
+
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
     public virtual DbSet<Territory> Territories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Category>(entity =>
-        {
-            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-        });
-        
+        modelBuilder.Entity<Category>(entity => { entity.Property(e => e.CategoryId).HasColumnName("CategoryID"); });
+
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
@@ -65,7 +60,7 @@ public partial class NorthwindContext : DbContext
                         j.IndexerProperty<string>("CustomerTypeId").HasColumnName("CustomerTypeID");
                     });
         });
-        
+
         modelBuilder.Entity<CustomerDemographic>(entity =>
         {
             entity.HasKey(e => e.CustomerTypeId);
@@ -79,7 +74,8 @@ public partial class NorthwindContext : DbContext
             entity.Property(e => e.BirthDate).HasColumnType("DATE");
             entity.Property(e => e.HireDate).HasColumnType("DATE");
 
-            entity.HasOne(d => d.ReportsToNavigation).WithMany(p => p.InverseReportsToNavigation).HasForeignKey(d => d.ReportsTo);
+            entity.HasOne(d => d.ReportsToNavigation).WithMany(p => p.InverseReportsToNavigation)
+                .HasForeignKey(d => d.ReportsTo);
 
             entity.HasMany(d => d.Territories).WithMany(p => p.Employees)
                 .UsingEntity<Dictionary<string, object>>(
@@ -98,7 +94,7 @@ public partial class NorthwindContext : DbContext
                         j.IndexerProperty<string>("TerritoryId").HasColumnName("TerritoryID");
                     });
         });
-        
+
         modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
@@ -120,7 +116,7 @@ public partial class NorthwindContext : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => new { e.OrderId, e.ProductId });
+            entity.HasKey(e => new {e.OrderId, e.ProductId});
 
             entity.ToTable("Order Details");
 
@@ -137,7 +133,7 @@ public partial class NorthwindContext : DbContext
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
-        
+
         modelBuilder.Entity<Product>(entity =>
         {
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
@@ -155,23 +151,17 @@ public partial class NorthwindContext : DbContext
 
             entity.HasOne(d => d.Supplier).WithMany(p => p.Products).HasForeignKey(d => d.SupplierId);
         });
-        
+
         modelBuilder.Entity<Region>(entity =>
         {
             entity.Property(e => e.RegionId)
                 .ValueGeneratedNever()
                 .HasColumnName("RegionID");
         });
-        
-        modelBuilder.Entity<Shipper>(entity =>
-        {
-            entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
-        });
-        
-        modelBuilder.Entity<Supplier>(entity =>
-        {
-            entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
-        });
+
+        modelBuilder.Entity<Shipper>(entity => { entity.Property(e => e.ShipperId).HasColumnName("ShipperID"); });
+
+        modelBuilder.Entity<Supplier>(entity => { entity.Property(e => e.SupplierId).HasColumnName("SupplierID"); });
 
         modelBuilder.Entity<Territory>(entity =>
         {

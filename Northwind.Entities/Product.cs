@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Northwind.Entities;
 
-namespace Northwind.Entities;
-
-public partial class Product
+public class Product
 {
     public int ProductId { get; set; }
 

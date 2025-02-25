@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Northwind.Entities;
 
-namespace Northwind.Entities;
-
-public partial class CustomerDemographic
+public class CustomerDemographic
 {
     public string CustomerTypeId { get; set; } = null!;
 

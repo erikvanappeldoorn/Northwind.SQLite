@@ -1,14 +1,12 @@
-﻿using System.Reflection;
-using System.Reflection.Emit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Northwind.Entities;
 
 namespace Northwind.Application;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         var services = ConfigureServices();
         var serviceProvider = services.BuildServiceProvider();

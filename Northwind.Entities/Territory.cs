@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Northwind.Entities;
 
-namespace Northwind.Entities;
-
-public partial class Territory
+public class Territory
 {
     public string TerritoryId { get; set; } = null!;
 
