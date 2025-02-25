@@ -25,7 +25,7 @@ internal class Program
         
         IServiceCollection services = new ServiceCollection();
         services.AddTransient<Application>();
-        services.AddDbContext<NorthwindContext>(optionsBuilder =>
+        services.AddPooledDbContextFactory<NorthwindContext>(optionsBuilder =>
         {
             optionsBuilder.UseSqlite($"Data Source={databasePath}");
         });
