@@ -11,7 +11,7 @@ internal class Program
         var services = ConfigureServices();
         var serviceProvider = services.BuildServiceProvider();
         var application = serviceProvider.GetService<Application>();
-        application?.Run();
+        application?.ExecuteDemoQuery();
     }
 
     private static IServiceCollection ConfigureServices()

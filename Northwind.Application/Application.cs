@@ -6,9 +6,10 @@ namespace Northwind.Application;
 
 public class Application(IDbContextFactory<NorthwindContext> northwindContextFactory)
 {
-    public void Run()
+    public void ExecuteDemoQuery()
     {
         using var context = northwindContextFactory.CreateDbContext();
+        
         var query = context.OrderDetails
             .Include(o => o.Order)
             .GroupBy(o => o.OrderId)
@@ -34,6 +35,12 @@ public class Application(IDbContextFactory<NorthwindContext> northwindContextFac
 
             Console.WriteLine($"Highest Order id {result.OrderId}. {result.Total:c}");
         });
+    }
+
+    public void ExecuteExercise1()
+    {
+        using var context = northwindContextFactory.CreateDbContext();
+        // var query
     }
 
     private void RunQueryWithTiming(Action action)
