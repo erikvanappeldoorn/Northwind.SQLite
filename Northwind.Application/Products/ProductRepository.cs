@@ -8,7 +8,7 @@ public class ProductRepository(NorthwindContext context) : IProductRepository
     {
         return context.Products
             .OrderByDescending(product => product.UnitPrice)
-            .Take(10)
+            .Take(5)
             .Select(p => p.ToDomain()).ToList();
     }
 }
