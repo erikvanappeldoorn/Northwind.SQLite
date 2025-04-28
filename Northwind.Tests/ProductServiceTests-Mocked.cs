@@ -18,7 +18,7 @@ public class ProductServiceTestsMocked
             new(78, "Bastogne koeken", 1.99),
         });
         
-        ProductService productService = new ProductService(productRepositoryMock);
+        ProductService productService = new(productRepositoryMock);
         
         var result = productService.GetTop3MostExpensiveProducts().ToList();
         

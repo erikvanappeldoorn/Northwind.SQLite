@@ -23,7 +23,7 @@ public class ProductServiceTestsStubbed
     public void GetTop3MostExpensiveProductsTests()
     {
         var productRepositoryStub = new ProductRepositoryStub();
-        ProductService productService = new ProductService(productRepositoryStub);
+        ProductService productService = new(productRepositoryStub);
         
         var result = productService.GetTop3MostExpensiveProducts().ToList();
         
