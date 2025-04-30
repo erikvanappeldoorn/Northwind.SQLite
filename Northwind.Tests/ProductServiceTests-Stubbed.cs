@@ -17,7 +17,7 @@ public class ProductRepositoryStub : IProductRepository
     }
 }
 
-public class ProductServiceTestsStubbed
+public class ProductServiceTests_Stubbed
 {
     [Fact]
     public void GetTop3MostExpensiveProductsTests()
@@ -27,7 +27,7 @@ public class ProductServiceTestsStubbed
         
         var result = productService.GetTop3MostExpensiveProducts().ToList();
         
-        Assert.Equal(3, result.Count());
+        Assert.Equal(3, result.Count);
         Assert.Equal(1, result[0].Index);
         Assert.Equal("Stroopwafels", result[1].Product.Name);
         Assert.Equal(3, result[2].Index);

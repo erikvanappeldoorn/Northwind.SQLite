@@ -35,7 +35,7 @@ public class ProductServiceTests_InMemoryDB
         
         var result = productService.GetTop3MostExpensiveProducts().ToList();
         
-        Assert.Equal(3, result.Count());
+        Assert.Equal(3, result.Count);
         Assert.Equal(1, result[0].Index);
         Assert.Equal("Stroopwafels", result[1].Product.Name);
         Assert.Equal(3, result[2].Index);
