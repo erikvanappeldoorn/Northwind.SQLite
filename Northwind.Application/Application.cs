@@ -40,7 +40,31 @@ public class Application(IDbContextFactory<NorthwindContext> northwindContextFac
     public void ExecuteExercise1()
     {
         using var context = northwindContextFactory.CreateDbContext();
-        // var query
+
+        var result = from region in context.Regions
+                     select region;
+
+        foreach (var region in result)
+        {
+            Console.WriteLine($"{region.RegionId} - {region.RegionDescription}");
+        }
+    }
+    
+    public void ExecuteExercise2()
+    {
+        using var context = northwindContextFactory.CreateDbContext();
+
+        var result = from employee in context.Employees
+            select new
+            {
+                employee.FirstName,
+                employee.LastName,
+            };
+
+        foreach (var employee in result)
+        {
+            Console.WriteLine($"{employee.FirstName} - {employee.LastName}");
+        }
     }
 
     private void RunQueryWithTiming(Action action)
