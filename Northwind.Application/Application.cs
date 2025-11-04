@@ -40,7 +40,7 @@ public class Application(IDbContextFactory<NorthwindContext> northwindContextFac
     public void ExecuteExercise1()
     {
         using var context = northwindContextFactory.CreateDbContext();
-
+        
         var result = from region in context.Regions
                      select region;
 
@@ -67,6 +67,43 @@ public class Application(IDbContextFactory<NorthwindContext> northwindContextFac
         }
     }
 
+    public void ExecuteExercise3()
+    {
+        using var context = northwindContextFactory.CreateDbContext();
+
+        var result = from employee in context.Employees
+            orderby employee.LastName
+            select new
+            {
+                employee.FirstName,
+                employee.LastName
+            };
+        
+        foreach (var employee in result)
+            Console.WriteLine($"{employee.FirstName} {employee.LastName}");
+    }
+
+    public void ExecuteExercise4()
+    {
+        using var context = northwindContextFactory.CreateDbContext();
+
+        var result = from order in context.Orders
+            orderby order.Freight descending
+            select new
+            {
+                order.OrderId,
+                order.OrderDate,
+                order.ShippedDate,
+                order.CustomerId,
+                order.Freight,
+            };
+
+        Console.WriteLine(result.Count());
+        //foreach (var order in result)
+        //{
+        //    Console.WriteLine($"{order.OrderId} {order.OrderDate} {order.ShippedDate} {order.CustomerId} {order.Freight}");
+        //}
+    }
     private void RunQueryWithTiming(Action action)
     {
         var stopwatch = new Stopwatch();
